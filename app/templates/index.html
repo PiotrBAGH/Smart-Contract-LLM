@@ -1,1 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Contract Tool</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Smart Contract Tool</h1>
+        <form id="uploadForm" action="/" method="POST" enctype="multipart/form-data">
+            <label for="file">Wybierz plik .sol:</label>
+            <input type="file" id="file" name="file" accept=".sol" required>
+            <button type="submit">Prześlij</button>
+        </form>
 
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        {% if functions %}
+            <h2>Wyodrębnione funkcje:</h2>
+            <ul>
+                {% for function in functions %}
+                    <li>
+                        <pre>{{ function }}</pre>
+                        <button class="save-button" data-function="{{ function }}" data-file-name="{{ file_name }}">Zapisz</button>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Obsługa przycisków zapisu funkcji
+            document.querySelectorAll(".save-button").forEach(button => {
+                button.addEventListener("click", function () {
+                    const functionText = this.getAttribute("data-function");
+                    const fileName = this.getAttribute("data-file-name");
+
+                    // Wysyłanie danych do endpointu /save_function
+                    fetch("/save_function", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded",
+                        },
+                        body: new URLSearchParams({
+                            function: functionText,
+                            file_name: fileName,
+                        }),
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            alert(data.message || "Funkcja zapisana pomyślnie.");
+                        })
+                        .catch(error => {
+                            console.error("Błąd:", error);
+                            alert("Nie udało się zapisać funkcji.");
+                        });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
