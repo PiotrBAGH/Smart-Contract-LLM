@@ -38,7 +38,7 @@ input[type="file"] {
 }
 
 button {
-    background-color: #4CAF50;
+    background-color: green;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -48,7 +48,7 @@ button {
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: darkgreen;
 }
 
 pre {
@@ -66,14 +66,18 @@ ul {
     padding: 0;
 }
 
+/* Styl dla przycisku "Zapisz" */
 .save-button {
     margin-top: 10px;
     background-color: green;
     color: white;
     border: none;
-    padding: 5px 10px;
+    padding: 10px 20px;  /* Takie same paddingi jak w przycisku "Testuj funkcję" */
     cursor: pointer;
     border-radius: 3px;
+    font-size: 16px;  /* Taki sam font-size */
+    width: 150px;  /* Dodajemy stałą szerokość dla obu przycisków */
+    height: 35px;  /* Stała wysokość */
 }
 
 .save-button:hover {
@@ -84,4 +88,20 @@ ul {
     color: red;
     font-weight: bold;
     margin-top: 20px;
+}
+
+/* Styl dla przycisku "Testuj funkcję" */
+.test-btn {
+    background-color: rgb(0, 170, 255);  /* Niebieski kolor */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    width: 150px;  /* Stała szerokość */
+    height: 35px;  /* Stała wysokość */
+}
+
+.test-btn:hover {
+    background-color: rgb(0, 93, 139);
 }
